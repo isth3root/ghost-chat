@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/contexts/UserContext.tsx","./src/hooks/useLogin.ts","./src/hooks/useSignup.ts","./src/pages/Dashboard.tsx","./src/pages/Login.tsx","./src/pages/SendMessage.tsx","./src/pages/Signup.tsx","./src/types/User.ts"],"version":"5.6.3"}

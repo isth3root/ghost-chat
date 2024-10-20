@@ -1,21 +1,32 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+// ========== PACKAGES ========== \\
+import React, { createContext, useState, useEffect } from "react";
 
-interface User {
-  username: string;
-  messages: string[];
-}
+// ========== TYPES & UTILS ========== \\
+import { User } from "../types/User";
+import { UserContextType } from "../types/User";
 
-interface UserContextType {
-  user: User | null;
-  setUser: (user: User) => void;
-}
+const initialUser: User | null = null;
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+const UserContext = createContext<UserContextType>({
+  user: initialUser,
+  setUser: () => {},
+});
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+export const UserProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : initialUser;
+  });
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -24,10 +35,4 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
-  }
-  return context;
-};
+export default UserContext;
