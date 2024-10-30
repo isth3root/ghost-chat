@@ -39,7 +39,7 @@ const Login: React.FC = () => {
         </div>
         <h1 className="text-xl mb-2 self-start">Password</h1>
         <div className="w-full max-w-xs mb-4">
-          <Input
+          <Input.Password
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             type="password"

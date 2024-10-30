@@ -1,24 +1,22 @@
-import { useContext, useEffect } from "react";
-import UserContext from "../contexts/UserContext";
+import { useEffect } from "react";
 import axios from "axios";
 
 const API_URL = "https://ghost-chat.liara.run/api"
 
 const useFetchUser = (username: string) => {
-  const { setUser } = useContext(UserContext)
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${API_URL}/users/${username}`);
-        setUser(response.data);
+        localStorage.setItem('user', JSON.stringify(response.data.user))
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
     fetchUser();
-  }, [username, setUser]);
+  }, [username]);
 };
 
 export default useFetchUser;

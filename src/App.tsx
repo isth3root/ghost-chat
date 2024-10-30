@@ -8,13 +8,10 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import SendMessage from "./pages/SendMessage";
 import Login from "./pages/Login";
-import UserContext from "./contexts/UserContext";
-import { useContext } from "react";
-
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const {user} = useContext(UserContext)
-  return user ? children : <Navigate to={'/'} />
+  const user = localStorage.getItem("user");
+  return user ? children : <Navigate to={"/"} />;
 };
 
 const App = () => {
@@ -31,7 +28,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/sendMessage" element={<SendMessage />} />
+        <Route path="/sendMessage/:username" element={<SendMessage />} />
       </Routes>
     </Router>
   );

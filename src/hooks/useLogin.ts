@@ -1,11 +1,8 @@
-import { useContext } from "react";
-import UserContext from "../contexts/UserContext";
 import axios from "axios";
 
 const API_URL = "https://ghost-chat.liara.run/api";
 
 export const useLogin = () => {
-  const { setUser } = useContext(UserContext);
 
   const loginUser = async (username: string, password: string) => {
     try {
@@ -13,8 +10,7 @@ export const useLogin = () => {
         username,
         password,
       });
-      setUser(response.data.user);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
